@@ -24,4 +24,4 @@ export default class BoardPresenter {
       render(new PointView(), this.eventListComponent.getElement());
     }
   }
-}
+};
