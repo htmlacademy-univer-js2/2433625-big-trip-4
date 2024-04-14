@@ -1,6 +1,6 @@
 import { formatStringToDateTime, formatStringToShortDate, formatStringToTime} from '../presenter/utils';
 
-function createPointTemplate({point, pointDestination}){
+function createPointTemplate({point}){
 
   const {basePrice, dateFrom,offers, isFavorite, type} = point;
 
