@@ -1,11 +1,15 @@
-function editPointTemplate() {
+
+function editPointTemplate({point}) {
+  const { type
+  } = point;
+
   return `<li class="trip-events__item">
   <form class="event event--edit" action="#" method="post">
     <header class="event__header">
       <div class="event__type-wrapper">
         <label class="event__type  event__type-btn" for="event-type-toggle-1">
           <span class="visually-hidden">Choose event type</span>
-          <img class="event__type-icon" width="17" height="17" src="img/icons/flight.png" alt="Event type icon">
+          <img class="event__type-icon" width="17" height="17" src="img/icons/${type}.png" alt="Event type icon">
         </label>
         <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
         <div class="event__type-list">
@@ -90,7 +94,7 @@ function editPointTemplate() {
             <label class="event__offer-label" for="event-offer-luggage-1">
               <span class="event__offer-title">Add luggage</span>
               &plus;&euro;&nbsp;
-              <span class="event__offer-price">50</span>
+              <span class="event__offer-price">50</span> //Добавить багаж
             </label>
           </div>
           <div class="event__offer-selector">
@@ -98,7 +102,7 @@ function editPointTemplate() {
             <label class="event__offer-label" for="event-offer-comfort-1">
               <span class="event__offer-title">Switch to comfort</span>
               &plus;&euro;&nbsp;
-              <span class="event__offer-price">80</span>
+              <span class="event__offer-price">80</span> //Комфорт
             </label>
           </div>
           <div class="event__offer-selector">
@@ -106,7 +110,7 @@ function editPointTemplate() {
             <label class="event__offer-label" for="event-offer-meal-1">
               <span class="event__offer-title">Add meal</span>
               &plus;&euro;&nbsp;
-              <span class="event__offer-price">15</span>
+              <span class="event__offer-price">15</span> //Добавить еду
             </label>
           </div>
           <div class="event__offer-selector">
@@ -114,7 +118,7 @@ function editPointTemplate() {
             <label class="event__offer-label" for="event-offer-seats-1">
               <span class="event__offer-title">Choose seats</span>
               &plus;&euro;&nbsp;
-              <span class="event__offer-price">5</span>
+              <span class="event__offer-price">5</span> //Выбрать место
             </label>
           </div>
           <div class="event__offer-selector">
@@ -122,7 +126,7 @@ function editPointTemplate() {
             <label class="event__offer-label" for="event-offer-train-1">
               <span class="event__offer-title">Travel by train</span>
               &plus;&euro;&nbsp;
-              <span class="event__offer-price">40</span>
+              <span class="event__offer-price">40</span> //Средство передвижения
             </label>
           </div>
         </div>

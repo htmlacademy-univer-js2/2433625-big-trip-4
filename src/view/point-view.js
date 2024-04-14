@@ -2,8 +2,18 @@ import { createElement } from '../render';
 import { createPointTemplate } from '../point-template';
 
 export default class PointView {
-  getFilter(){
-    return createPointTemplate();
+  constructor({point, pointDestination, pointOffers}) {
+    this.point = point;
+    this.pointDestination = pointDestination;
+    this.pointOffers = pointOffers;
+  }
+
+  getFilter() {
+    return createPointTemplate ({
+      point: this.point,
+      pointDestination: this.pointDestination,
+      pointOffers: this.pointOffers
+    });
   }
 
   getElement(){
