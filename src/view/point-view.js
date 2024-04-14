@@ -22,7 +22,7 @@ export default class PointView {
     }
     return this.element;
   }
-  
+
   removeElement(){
     this.element = null;
   }

@@ -26,4 +26,3 @@ export {
   Duration,
   TYPES,
 };
-  

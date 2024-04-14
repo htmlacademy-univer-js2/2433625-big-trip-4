@@ -1,11 +1,8 @@
 import { formatStringToDateTime, formatStringToShortDate, formatStringToTime} from '../presenter/utils';
 
-function createPointTemplate(){
+function createPointTemplate({point, pointDestination}){
 
-  const {
-    basePrice, dateFrom,
-    offers, isFavorite, type
-  } = point;
+  const {basePrice, dateFrom,offers, isFavorite, type} = point;
 
   return `<li class="trip-events__item">
   <div class="event">

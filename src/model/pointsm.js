@@ -3,7 +3,7 @@ export default class PointsModel {
     this.service = service;
     this.points = this.service.getPoints();
   }
-  
+
   get() {
     return this.points;
   }
