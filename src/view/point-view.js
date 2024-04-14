@@ -15,12 +15,14 @@ export default class PointView {
       pointOffers: this.pointOffers
     });
   }
+
   getElement(){
     if(!this.element){
       this.element = createElement(this.getFilter());
     }
     return this.element;
   }
+  
   removeElement(){
     this.element = null;
   }

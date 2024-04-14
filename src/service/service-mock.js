@@ -18,24 +18,29 @@ export default class MockService {
   getDestinations() {
     return this.destinations;
   }
+
   getOffers() {
     return this.offers;
   }
+
   getPoints() {
     return this.points;
   }
+
   generateDestinations() {
     return Array.from(
       {length: DESTINATION_COUNT},
       () => generateDestination()
     );
   }
+
   generateOffers() {
     return TYPES.map((type) => ({
       type,
       offers: Array.from({length: getRandomInteger(0, OFFER_COUNT)}, () => generateOffer(type))
     }));
   }
+
   generatePoints() {
     return Array.from({length: POINT_COUNT}, () => {
       const type = getRandomValue(TYPES);

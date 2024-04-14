@@ -1,3 +1,5 @@
+import {type} from '../utils.js';
+
 function addNewPoint() {
   return `
   <li class="trip-events__item">
