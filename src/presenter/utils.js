@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import {FilterType} from '../mock/const';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -49,4 +50,15 @@ function getPointDuration(dateForm, dateTo) {
   return pointDuration;
 }
 
-export {getRandomValue, formatStringToDateTime, formatStringToShortDate, formatStringToTime, capitalize, getPointDuration};
+const isPointFuture = (point) => dayjs().isBefore(point.dateFrom);
+const isPointPresent = (point) => dayjs().isAfter(point.dateFrom) && dayjs().isBefore(point.dateTo);
+const isPointPast = (point) => dayjs().isAfter(point.dateTo);
+
+const filterByType = {
+  [FilterType.ANY]: (points) => [...points],
+  [FilterType.FUTURE]: (points) => points.filter((point) => isPointFuture(point)),
+  [FilterType.PRESENT]: (points) => points.filter((point) => isPointPresent(point)),
+  [FilterType.PAST]: (points) => points.filter((point) => isPointPast(point))
+};
+
+export {getRandomValue, formatStringToDateTime, formatStringToShortDate, formatStringToTime, capitalize, getPointDuration, getRandomInteger, filterByType};
