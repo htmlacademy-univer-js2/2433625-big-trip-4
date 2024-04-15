@@ -1,19 +1,8 @@
-import { createElement } from '../render';
+import AbstractView from '../framework/view/abstract-view';
 import { mainInfo } from '../info-template';
 
-export default class MainInfo {
-  getFilter(){
-    return mainInfo();
-  }
-
-  getElement(){
-    if(!this.element){
-      this.element = createElement(this.getFilter());
-    }
-    return this.element;
-  }
-
-  removeElement(){
-    this.element = null;
+export default class MainInfo extends AbstractView{
+  get template() {
+    return mainInfo;
   }
 }

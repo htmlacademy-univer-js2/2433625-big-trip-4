@@ -1,19 +1,8 @@
-import { createElement } from '../render';
+import AbstractView from '../framework/view/abstract-view';
 import { addNewPoint } from '../add-new-point-template';
 
-export default class NewPoint {
-  getFilter(){
-    return addNewPoint();
-  }
-
-  getElement(){
-    if(!this.element){
-      this.element = createElement(this.getFilter());
-    }
-    return this.element;
-  }
-
-  removeElement(){
-    this.element = null;
+export default class NewPoint extends AbstractView{
+  get template() {
+    return addNewPoint;
   }
 }
