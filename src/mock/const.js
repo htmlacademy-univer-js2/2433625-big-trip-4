@@ -80,8 +80,6 @@ export {
   Price,
   Duration,
   TYPES,
-  POINT_COUNT,
-  DESTINATION_COUNT,
   FilterType,
   SortType,
   FilterSettings,
