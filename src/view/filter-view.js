@@ -1,20 +1,8 @@
-import { createElement } from '../render';
+import AbstractView from '../framework/view/abstract-view';
 import { createListFilterElement } from '../filter-template';
 
-
-export default class ListFilterElement {
-  getFilter(){
-    return createListFilterElement();
-  }
-
-  getElement(){
-    if(!this.element){
-      this.element = createElement(this.getFilter());
-    }
-    return this.element;
-  }
-
-  removeElement(){
-    this.element = null;
+export default class ListFilterElement extends AbstractView{
+  get template() {
+    return createListFilterElement;
   }
 }

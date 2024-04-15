@@ -1,19 +1,8 @@
-import { createElement } from '../render';
+import AbstractView from '../framework/view/abstract-view';
 import { createListSortElement } from '../sort-template';
 
-export default class ListSortElement {
-  getFilter(){
-    return createListSortElement();
-  }
-
-  getElement(){
-    if(!this.element){
-      this.element = createElement(this.getFilter());
-    }
-    return this.element;
-  }
-
-  removeElement(){
-    this.element = null;
+export default class ListSortElement extends AbstractView{
+  get template() {
+    return createListSortElement;
   }
 }
