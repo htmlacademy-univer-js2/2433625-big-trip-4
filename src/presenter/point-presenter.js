@@ -1,7 +1,7 @@
 import {
   remove,
   render,
-  replace
+  replace,
 } from '../framework/render.js';
 
 import PointView from '../view/point-view.js';
@@ -36,23 +36,11 @@ export default class PointPresenter {
   init(point) {
     this.#point = point;
 
-    this.#pointComponent = new PointView({
-      point: this.#point,
-      destination: this.#destinationsModel.getById(point.destination),
-      offers: this.#offersModel.getByType(point.type),
-      onEditClick: this.#pointEditHandler,
-      onFavoriteToggle: this.#pointFavoriteToggleHandler,
-    });
+    this.#pointComponent = this.#createPointView();
 
-    this.#pointEditorComponent = new PointEditorView({
-      point: this.#point,
-      destination: this.#destinationsModel.getById(point.destination),
-      offers: this.#offersModel.getByType(point.type),
-      onCloseClick: this.#pointCloseHandler,
-      onSubmitForm: this.#pointSubmitHandler
-    });
+    this.#pointEditorComponent = this.#createPointEditorView();
 
-    if(this.#mode === PointMode.EDITABLE) {
+    if (this.#mode === PointMode.EDITABLE) {
       render(this.#pointEditorComponent, this.#container);
       return;
     }
@@ -63,23 +51,11 @@ export default class PointPresenter {
   update(point) {
     this.#point = point;
 
-    const updatedPointComponent = new PointView({
-      point: this.#point,
-      destination: this.#destinationsModel.getById(point.destination),
-      offers: this.#offersModel.getByType(point.type),
-      onEditClick: this.#pointEditHandler,
-      onFavoriteToggle: this.#pointFavoriteToggleHandler,
-    });
+    const updatedPointComponent = this.#createPointView();
 
-    const updatedEditorComponent = new PointEditorView({
-      point: this.#point,
-      destination: this.#destinationsModel.getById(point.destination),
-      offers: this.#offersModel.getByType(point.type),
-      onCloseClick: this.#pointCloseHandler,
-      onSubmitForm: this.#pointSubmitHandler
-    });
+    const updatedEditorComponent = this.#createPointEditorView();
 
-    if(this.#mode === PointMode.EDITABLE) {
+    if (this.#mode === PointMode.EDITABLE) {
       replace(updatedEditorComponent, this.#pointEditorComponent);
     } else {
       replace(updatedPointComponent, this.#pointComponent);
@@ -95,9 +71,29 @@ export default class PointPresenter {
   }
 
   resetView() {
-    if(this.#mode !== PointMode.IDLE) {
+    if (this.#mode !== PointMode.IDLE) {
       this.#replaceEditorByPoint();
     }
+  }
+
+  #createPointView() {
+    return new PointView({
+      point: this.#point,
+      destination: this.#destinationsModel.getById(this.#point.destination),
+      offers: this.#offersModel.getByType(this.#point.type),
+      onEditClick: this.#pointEditHandler,
+      onFavoriteToggle: this.#pointFavoriteToggleHandler,
+    });
+  }
+
+  #createPointEditorView() {
+    return new PointEditorView({
+      point: this.#point,
+      destinations: this.#destinationsModel.get(),
+      offers: this.#offersModel.get(),
+      onCloseClick: this.#pointCloseHandler,
+      onSubmitForm: this.#pointSubmitHandler,
+    });
   }
 
   #replacePointByEditor() {
