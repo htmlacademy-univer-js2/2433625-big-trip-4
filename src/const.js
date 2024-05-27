@@ -9,8 +9,9 @@ const MAX_IMAGES_COUNT = 5;
 
 const MSEC_IN_HOUR = MSEC_IN_SEC * SEC_IN_MIN * MIN_IN_HOUR;
 const MSEC_IN_DAY = MSEC_IN_HOUR * HOUR_IN_DAY;
-
 const BASE_EVENT_TYPE = 'flight';
+const HOST = 'https://21.objects.htmlacademy.pro/big-trip';
+const TOKEN = 'Basic dXNlckBwYXNzd29yZAo=';
 
 const BASE_POINT = {
   basePrice: 0,
@@ -20,6 +21,13 @@ const BASE_POINT = {
   isFavorite: false,
   offers: [],
   type: BASE_EVENT_TYPE,
+};
+
+const MethodHttp = {
+  GET: 'GET',
+  PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE',
 };
 
 const REQUIRED_BASE_POINT_FIELDS = ['dateFrom', 'dateTo', 'destination', 'type'];
@@ -61,6 +69,12 @@ const EditType = {
 const PointMode = {
   IDLE: 'IDLE',
   EDITABLE: 'EDITABLE',
+};
+
+const PointEnd = {
+  POINTS: 'points',
+  OFFERS: 'offers',
+  DESTINATIONS: 'destinations',
 };
 
 const FilterType = {
@@ -167,4 +181,8 @@ export {
   PointMode,
   UpdateType,
   EditType,
+  TOKEN,
+  MethodHttp,
+  PointEnd,
+  HOST,
 };
