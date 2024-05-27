@@ -169,6 +169,6 @@ export default class PointEditorView extends AbstractView {
 
   #saveClickHandler = (evt) => {
     evt.preventDefault();
-    this.#onSubmitForm();
+    this.#onSubmitForm(this.#point);
   };
 }
