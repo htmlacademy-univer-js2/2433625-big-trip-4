@@ -31,6 +31,7 @@ const MethodHttp = {
 };
 
 const REQUIRED_BASE_POINT_FIELDS = ['dateFrom', 'dateTo', 'destination', 'type'];
+const REQUIRED_POINT_FIELDS = ['dateFrom', 'dateTo', 'destination', 'type', 'basePrice'];
 
 const EVENT_TYPES = [
   'taxi',
@@ -159,6 +160,17 @@ const UpdateType = {
   INIT: 'INIT',
 };
 
+const ActionType = {
+  UPDATE_POINT: 'UPDATE_POINT',
+  DELETE_POINT: 'DELETE_POINT',
+  CREATE_POINT: 'CREATE_POINT',
+};
+
+const LimitBlock = {
+  LOWER: 250,
+  UPPER: 1000,
+};
+
 export {
   POINTS_COUNT,
   EVENT_TYPES,
@@ -185,4 +197,7 @@ export {
   MethodHttp,
   PointEnd,
   HOST,
+  REQUIRED_POINT_FIELDS,
+  ActionType,
+  LimitBlock,
 };

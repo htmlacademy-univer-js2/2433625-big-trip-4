@@ -6,7 +6,7 @@ import {
 
 import PointView from '../view/point-view.js';
 import PointEditorView from '../view/point-editor-view.js';
-import { PointMode } from '../const.js';
+import { EditType, PointMode, ActionType } from '../const.js';
 
 export default class PointPresenter {
   #container = null;
@@ -19,6 +19,7 @@ export default class PointPresenter {
   #offersModel = null;
   #mode = PointMode.IDLE;
   #onPointDelete = null;
+  #onUserAction = null;
 
   constructor({
     container,
@@ -27,6 +28,7 @@ export default class PointPresenter {
     onPointChange,
     onEditorOpen,
     onPointDelete,
+    onUserAction,
   }) {
     this.#container = container;
     this.#destinationsModel = destinationsModel;
@@ -34,6 +36,7 @@ export default class PointPresenter {
     this.#onPointChange = onPointChange;
     this.#onEditorOpen = onEditorOpen;
     this.#onPointDelete = onPointDelete;
+    this.#onUserAction = onUserAction;
   }
 
   init(point) {
@@ -79,6 +82,18 @@ export default class PointPresenter {
     }
   }
 
+  triggerError() {
+    if(this.#mode !== PointMode.EDITABLE) {
+      this.#pointComponent.shake();
+      return;
+    }
+
+    this.#pointEditorComponent.shake(() => {
+      this.#pointEditorComponent.setDeleting(false);
+      this.#pointEditorComponent.setUpdating(false);
+    });
+  }
+
   #createPointView() {
     return new PointView({
       point: this.#point,
@@ -97,6 +112,7 @@ export default class PointPresenter {
       onCloseClick: this.#pointCloseHandler,
       onSubmitForm: this.#pointSubmitHandler,
       onDeleteClick: this.#pointDeleteHandler,
+      mode: EditType.EDITING,
     });
   }
 
@@ -125,8 +141,13 @@ export default class PointPresenter {
   };
 
   #pointSubmitHandler = (point) => {
-    this.#onPointChange(point);
-    this.#replaceEditorByPoint();
+    this.#pointEditorComponent.setUpdating(true);
+    this.#onUserAction(ActionType.UPDATE_POINT, point);
+  };
+
+  #pointDeleteHandler = (point) => {
+    this.#pointEditorComponent.setDeleting(true);
+    this.#onUserAction(ActionType.DELETE_POINT, point);
   };
 
   #pointCloseHandler = () => {
@@ -134,10 +155,6 @@ export default class PointPresenter {
   };
 
   #pointFavoriteToggleHandler = (isFavorite) => {
-    this.#onPointChange({ ...this.#point, isFavorite });
-  };
-
-  #pointDeleteHandler = (point) => {
-    this.#onPointDelete(point);
+    this.#onUserAction(ActionType.UPDATE_POINT, { ...this.#point, isFavorite });
   };
 }
