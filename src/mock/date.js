@@ -2,7 +2,8 @@ import dayjs from 'dayjs';
 import { getRandomInteger } from '../presenter/utils.js';
 import { Duration } from './const';
 
-let date = dayjs().subtract(getRandomInteger(0,Duration.DAY), 'day').toDate();
+let date = dayjs().subtract(getRandomInteger(0,Duration.DAY), 'day').toDate(); //
+
 function getDate({next}) {
   const minGap = getRandomInteger(0, Duration.MIN);
   const hourGap = getRandomInteger(1, Duration.HOUR);
@@ -10,7 +11,7 @@ function getDate({next}) {
 
   if (next) {
     date = dayjs(date)
-      .add(minGap, 'min')
+      .add(minGap, 'minute')
       .add(hourGap, 'hour')
       .add(daysGap, 'day')
       .toDate();

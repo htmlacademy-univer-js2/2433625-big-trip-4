@@ -1,0 +1,19 @@
+//Модель для хранения данных для цен
+
+export default class OffersModel {
+  #service = null;
+  #offers = null;
+
+  constructor(service) {
+    this.#service = service;
+    this.#offers = this.#service.offers;
+  }
+
+  get() {
+    return this.#offers;
+  }
+
+  getByType(type) {
+    return this.#offers.find((offers) => offers.type === type.toLowerCase()).offers;
+  }
+}

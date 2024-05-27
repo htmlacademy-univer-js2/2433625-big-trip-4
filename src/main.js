@@ -1,34 +1,28 @@
-import ListFilterElement from './view/filter-view';
-import {render, RenderPosition} from './render';
-// import ListSortElement from './view/sort-view';
-// import ListElement from './view/point-view';
-// import NewPoint from './view/add-new-point';
-// import EventListView from './view/event-list-view';
-import BoardPresenter from './presenter/board-presenter';
-import MainInfo from './view/info-view';
-import MockService from './service/service-mock';
-import PointsModel from './model/pointsm';
-import DestinationsModel from './model/destm';
-import OffersModel from './model/offersm';
-
-const bodyElement = document.querySelector('body');
-const headerElement = bodyElement.querySelector('.page-header');
-const siteListFilter = headerElement.querySelector('.trip-controls__filters');
-const tripMain = headerElement.querySelector('.trip-main');
-const eventsList = bodyElement.querySelector('.trip-events');
+import PointsModel from './model/points-model.js';
+import OffersModel from './model/offers-model.js';
+import DestinationsModel from './model/destinations-model.js';
+import FiltersPresenter from './presenter/filters-presenter.js';
+import TripInfoPresenter from './presenter/trip-info-presenter.js';
+import MockService from './service/mock-service.js';
+import LeaderPresenter from './presenter/leader-presenter.js';
 
 const mockService = new MockService();
+const pointsModel = new PointsModel(mockService);
+const offersModel = new OffersModel(mockService);
 const destinationsModel = new DestinationsModel(mockService);
-const offerModel = new OffersModel(mockService);
-const pointModel = new PointsModel(mockService);
 
-const boardPresenter = new BoardPresenter({
-  container: eventsList,
-  destinationsModel,
-  offerModel,
-  pointModel
+const container = document.querySelector('.trip-events');
+
+const leaderPresenter = new LeaderPresenter({
+  container,
+  pointsModel,
+  offersModel,
+  destinationsModel
 });
-render(new MainInfo(), tripMain, RenderPosition.AFTERBEGIN);
-render(new ListFilterElement(), siteListFilter);
 
-boardPresenter.init();
+const filtersPresenter = new FiltersPresenter({ pointsModel });
+const tripInfoPresenter = new TripInfoPresenter();
+
+leaderPresenter.init();
+filtersPresenter.init();
+tripInfoPresenter.init();
