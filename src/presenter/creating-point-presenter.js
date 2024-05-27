@@ -1,4 +1,4 @@
-import { EditType, BASE_POINT } from '../const.js';
+import { EditType, BASE_POINT, UpdateType } from '../const.js';
 import {
   RenderPosition,
   remove,
@@ -64,7 +64,7 @@ export default class CreatePointPresenter {
   };
 
   #formSubmitHandler = (point) => {
-    this.#pointsModel.add(point);
+    this.#pointsModel.add(UpdateType.MAJOR, point);
     this.destroy();
   };
 
