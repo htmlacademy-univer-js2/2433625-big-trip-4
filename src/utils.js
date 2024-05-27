@@ -57,7 +57,7 @@ const filterByType = {
   [FilterType.PAST]: (points) => points.filter((point) => isPointPast(point))
 };
 
-const camel = (string) => string.replace(/_([a-z])/g, (result) => result[1].toUpperCase());
+const SnakeToCamel = (string) => string.replace(/_([a-z])/g, (result) => result[1].toUpperCase());
 const deepCamel = (object) => {
   if (typeof object !== 'object' || object === null) {
     return object;
@@ -67,11 +67,26 @@ const deepCamel = (object) => {
     return object.map(deepCamel);
   }
 
-  const res = Object.fromEntries(Object.entries(object).map(([key, value]) => [camel(key), deepCamel(value)]));
+  const res = Object.fromEntries(Object.entries(object).map(([key, value]) => [SnakeToCamel(key), deepCamel(value)]));
   return res;
 };
 
-const ApiData = (point) => deepCamel(point);
+const CamelToSnake = (string) => string.replace(/[A-Z]/g, (result) => `_${result.toLowerCase()}`);
+const deepSnake = (object) => {
+  if (typeof object !== 'object' || object === null) {
+    return object;
+  }
+
+  if (Array.isArray(object)) {
+    return object.map(deepSnake);
+  }
+
+  const res = Object.fromEntries(Object.entries(object).map(([key, value]) => [CamelToSnake(key), deepSnake(value)]));
+  return res;
+};
+
+const ApiData = (data) => deepCamel(data);
+const ApiToData = (point) => deepSnake(point);
 
 export {
   getRandomArrayElement,
@@ -82,5 +97,6 @@ export {
   incrementCounter,
   toCapitalize,
   ApiData,
+  ApiToData,
   filterByType,
 };
