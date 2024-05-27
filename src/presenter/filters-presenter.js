@@ -1,7 +1,10 @@
+import {
+  render
+} from '../framework/render.js';
+
+import FiltersView from '../view/filters-view.js';
 import { FilterSettings } from '../const.js';
 import { filterByType } from '../utils';
-import { render} from '../framework/render.js';
-import FiltersView from '../view/filters-view.js';
 
 const filtersContainer = document.querySelector('.trip-controls__filters');
 
