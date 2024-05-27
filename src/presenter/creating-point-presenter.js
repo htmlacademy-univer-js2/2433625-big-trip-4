@@ -1,9 +1,5 @@
 import { EditType, BASE_POINT, UpdateType } from '../const.js';
-import {
-  RenderPosition,
-  remove,
-  render,
-} from '../framework/render.js';
+import { RenderPosition, remove, render } from '../framework/render.js';
 import CreatePointButtonView from '../view/create-button-view.js';
 import PointEditorView from '../view/point-editor-view.js';
 
@@ -42,6 +38,10 @@ export default class CreatePointPresenter {
     this.#pointEditorComponent = null;
 
     document.removeEventListener('keydown', this.#escKeyDownHandler);
+  }
+
+  setButtonDisabled(disabled) {
+    this.#createPointButtonComponent.setDisabled(disabled);
   }
 
   #createPointClickHandler = () => {
