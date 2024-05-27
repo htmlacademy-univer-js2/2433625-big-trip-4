@@ -183,7 +183,7 @@ export default class RoutePresenter {
 
   #pointsModelEventHandler = (type, data) => {
 
-    if (this.#isError || data.error) {
+    if (this.#isError || data?.error) {
       return;
     }
 

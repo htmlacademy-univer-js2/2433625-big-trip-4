@@ -9,9 +9,9 @@ const MAX_IMAGES_COUNT = 5;
 
 const MSEC_IN_HOUR = MSEC_IN_SEC * SEC_IN_MIN * MIN_IN_HOUR;
 const MSEC_IN_DAY = MSEC_IN_HOUR * HOUR_IN_DAY;
-const BASE_EVENT_TYPE = 'flight';
+const BASE_EVENT_TYPE = 'taxi';
 const HOST = 'https://21.objects.htmlacademy.pro/big-trip';
-const TOKEN = 'Basic dXNlckBwYXNzd29yZAo=';
+const TOKEN = 'Basic drhd9rehd0dr057a';
 
 const BASE_POINT = {
   basePrice: 0,
@@ -44,23 +44,39 @@ const EVENT_TYPES = [
   'sightseeing',
   'restaurant',
 ];
+
 const CITIES = [
-  'Paris',
-  'London',
-  'Chicago',
-  'Tokio',
-  'New York',
-  'Moscow',
+  'Accra',
+  'Aktobe',
+  'Alexandria',
+  'Algiers',
+  'Almaty',
   'Amsterdam',
-  'San-Francisco',
+  'Ankara',
+  'Antalya',
+  'Antananarivo',
+  'Antwerp',
+  'Anshan',
+  'Ahmedaba',
+  'Astana',
+  'Asuncion',
+  'Athens',
+  'Ashgabat',
+  'Baghdad',
+  'Basel',
+  'Baku',
+  'Bangalore',
 ];
 
 const DESCRIPTIONS = [
-  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt architecto labore atque!',
-  'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem exercitationem culpa, molestias qui eveniet corrupti?',
-  'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius, dolorem.',
-  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit ad eaque cupiditate praesentium maxime.',
+  'A travel agency is a professional travel agency that provides a full range of services in the field of organizing leisure and travel.',
+  'It will help you choose the ideal route, book tickets and accommodation, and also provide the necessary advisory assistance',
+  'The travel agency works only with trusted partners and guarantees high quality services.',
+  'In addition, it offers various types of recreation: from extreme tours to romantic trips and family vacations.',
+  'You can be sure that your holiday will be unforgettable and safe.',
 ];
+
+const TRIP_POINTS_COUNT = 3;
 
 const EditType = {
   EDITING: 'Editing point',
@@ -181,6 +197,7 @@ export {
   SORTING_COLUMNS,
   BASE_POINT,
   REQUIRED_BASE_POINT_FIELDS,
+  TRIP_POINTS_COUNT,
   FilterType,
   FilterSettings,
   SortType,
