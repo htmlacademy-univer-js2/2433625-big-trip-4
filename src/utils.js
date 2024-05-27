@@ -1,13 +1,7 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
-import {
-  MSEC_IN_HOUR,
-  MSEC_IN_DAY,
-  DateFormat,
-  DurationFormat,
-  FilterType
-} from './const.js';
+import { MSEC_IN_HOUR, MSEC_IN_DAY, TRIP_POINTS_COUNT, DateFormat, DurationFormat, FilterType } from './const.js';
 
 const getRandomArrayElement = (items) => items[Math.floor(Math.random() * items.length)];
 const getRandomPositiveNumber = (min = 0, max = 1) => {
@@ -85,6 +79,35 @@ const deepSnake = (object) => {
   return res;
 };
 
+const getRouteLabel = (sortedPoints, destinations) => {
+  const pointsDestinations = sortedPoints
+    .map((point) => destinations.find((destination) => destination.id === point.destination)?.name);
+
+  if (pointsDestinations.length <= TRIP_POINTS_COUNT) {
+    return pointsDestinations.join(' &mdash; ');
+  }
+  return `${pointsDestinations.at(0)}&nbsp;&mdash;&nbsp;...&nbsp;&mdash;&nbsp;${pointsDestinations.at(-1)}`;
+};
+
+const getDurationPeriod = (sortedPoints) => {
+  if (!sortedPoints.length) {
+    return '';
+  }
+
+  const startDateTime = dayjs(sortedPoints[0].dateFrom).format(DateFormat.SHORT);
+  if (sortedPoints.length === 1) {
+    return startDateTime;
+  }
+
+  return `${startDateTime}&nbsp;&mdash;&nbsp;${dayjs(sortedPoints.at(-1).dateTo).format(DateFormat.SHORT)}`;
+};
+const getPointOffersCost = (pointOffersIds, offers) => pointOffersIds.reduce((offerCost, id) => offerCost + (offers.find((offer) => offer.id === id)?.price ?? 0), 0);
+
+const getTotalPointsCost = (points, offers) => points.reduce((total, point) => {
+  const typeOffers = offers.find((offer) => offer.type === point.type)?.offers ?? [];
+  return total + point.basePrice + getPointOffersCost(point.offers, typeOffers);
+}, 0);
+
 const ApiData = (data) => deepCamel(data);
 const ApiToData = (point) => deepSnake(point);
 
@@ -99,4 +122,7 @@ export {
   ApiData,
   ApiToData,
   filterByType,
+  getRouteLabel,
+  getDurationPeriod,
+  getTotalPointsCost,
 };
