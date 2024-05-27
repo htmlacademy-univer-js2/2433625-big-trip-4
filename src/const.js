@@ -10,6 +10,20 @@ const MAX_IMAGES_COUNT = 5;
 const MSEC_IN_HOUR = MSEC_IN_SEC * SEC_IN_MIN * MIN_IN_HOUR;
 const MSEC_IN_DAY = MSEC_IN_HOUR * HOUR_IN_DAY;
 
+const BASE_EVENT_TYPE = 'flight';
+
+const BASE_POINT = {
+  basePrice: 0,
+  dateFrom: null,
+  dateTo: null,
+  destination: null,
+  isFavorite: false,
+  offers: [],
+  type: BASE_EVENT_TYPE,
+};
+
+const REQUIRED_BASE_POINT_FIELDS = ['dateFrom', 'dateTo', 'destination', 'type'];
+
 const EVENT_TYPES = [
   'taxi',
   'bus',
@@ -38,6 +52,11 @@ const DESCRIPTIONS = [
   'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius, dolorem.',
   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit ad eaque cupiditate praesentium maxime.',
 ];
+
+const EditType = {
+  EDITING: 'Editing point',
+  CREATING: 'Creating point',
+};
 
 const PointMode = {
   IDLE: 'IDLE',
@@ -103,6 +122,7 @@ const DateFormat = {
   SHORT: 'MMM DD',
   FULL: 'YYYY-MM-DDTHH:mm',
   WITH_DELIMITER: 'DD/MM/YY HH:mm',
+  WITH_DELIMITER_FLAT_PICKER: 'd/m/y H:i',
 };
 const DurationFormat = {
   DAYS: 'DD[D] HH[H] mm[M]',
@@ -118,6 +138,13 @@ const MocksMaxCount = {
   POINTS: 5,
 };
 
+const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
+  INIT: 'INIT',
+};
+
 export {
   POINTS_COUNT,
   EVENT_TYPES,
@@ -126,6 +153,8 @@ export {
   CITIES,
   DESCRIPTIONS,
   SORTING_COLUMNS,
+  BASE_POINT,
+  REQUIRED_BASE_POINT_FIELDS,
   FilterType,
   FilterSettings,
   SortType,
@@ -136,4 +165,6 @@ export {
   MSEC_IN_HOUR,
   MSEC_IN_DAY,
   PointMode,
+  UpdateType,
+  EditType,
 };
