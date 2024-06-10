@@ -1,32 +1,35 @@
-import PointsModel from './model/points-model.js';
-import OffersModel from './model/offers-model.js';
-import DestinationsModel from './model/destinations-model.js';
-import RoutePresenter from './presenter/leader-presenter.js';
-import FiltersPresenter from './presenter/filters-presenter.js';
-import TripInfo from './presenter/trip-info-presenter.js';
+import PointsModel from './model/model-for-points.js';
+import OffersModel from './model/model-for-offers.js';
+import FiltersModel from './model/model-for-filters.js';
+import DestinationsModel from './model/model-for-destinations.js';
 
-import CreatePointPresenter from './presenter/creating-point-presenter.js';
-import MainApiService from './service/api-service.js';
-import FiltersModel from './model/filters-model.js';
+import LeaderPresenter from './presenter/presenter-for-leader.js';
+import FiltersPresenter from './presenter/presenter-for-filters.js';
+import CreatePointPresenter from './presenter/presenter-for-creating-point.js';
+import TripInfoPresenter from './presenter/presenter-for-trip-info.js';
 
-const apiService = new MainApiService();
-const pointsModel = new PointsModel(apiService);
-const offersModel = new OffersModel(apiService);
-const destinationsModel = new DestinationsModel(apiService);
+import ApiService from './service/api-service.js';
+
+const service = new ApiService();
+
+const pointsModel = new PointsModel(service);
+const offersModel = new OffersModel(service);
+const destinationsModel = new DestinationsModel(service);
 const filtersModel = new FiltersModel();
 
-const pointsContainer = document.querySelector('.trip-events');
-const filtersContainer = document.querySelector('.trip-controls__filters');
-const tripMainContainer = document.querySelector('.trip-main');
+const pointsCase = document.querySelector('.trip-events');
+const filtersCase = document.querySelector('.trip-controls__filters');
+const tripCase = document.querySelector('.trip-main');
 
 const createPointPresenter = new CreatePointPresenter({
-  container: tripMainContainer,
-  editorContainer: pointsContainer,
+  container: tripCase,
+  editorContainer: pointsCase,
   offersModel,
   destinationsModel,
 });
-const routePresenter = new RoutePresenter({
-  container: pointsContainer,
+
+const leaderPresenter = new LeaderPresenter({
+  container: pointsCase,
   createPointPresenter,
   pointsModel,
   offersModel,
@@ -34,14 +37,14 @@ const routePresenter = new RoutePresenter({
   filtersModel,
 });
 
-const tripInfo = new TripInfo({
-  container: tripMainContainer,
+const tripInfo = new TripInfoPresenter({
+  container: tripCase,
   destinationsModel,
   offersModel,
   pointsModel,
 });
 
-const filtersPresenter = new FiltersPresenter({ container: filtersContainer, pointsModel, filtersModel });
+const filtersPresenter = new FiltersPresenter({ container: filtersCase, pointsModel, filtersModel });
 
 const bootstrap = async () => {
   await Promise.all([
@@ -49,7 +52,7 @@ const bootstrap = async () => {
     destinationsModel.init(),
   ]);
   pointsModel.init();
-  routePresenter.init();
+  leaderPresenter.init();
   filtersPresenter.init();
   tripInfo.init();
 };
