@@ -1,13 +1,8 @@
-import {
-  DateFormat,
-} from '../const.js';
-import {
-  calculateDuration,
-  formatDate
-} from '../utils.js';
+import { DATE_FORMAT } from '../mock/const.js';
+import { calculateDuration, formatDate } from '../mock/utils.js';
 import AbstractView from '../framework/view/abstract-view.js';
 
-const createOffersListMarkup = (pointOffers, typeOffers) => pointOffers
+const createOffersPoint = (pointOffers, typeOffers) => pointOffers
   .map((pointOfferId) => {
     if (pointOffers.length && typeOffers.length) {
       const selectedOffer = typeOffers.filter((offer) => offer.id === pointOfferId)[0];
@@ -34,16 +29,16 @@ function createPointTemplate(eventPoint, typeOffers, destination) {
   return (
     `<li class="trip-events__item">
       <div class="event">
-        <time class="event__date" datetime="${dateFrom}">${formatDate(dateFrom, DateFormat.SHORT)}</time>
+        <time class="event__date" datetime="${dateFrom}">${formatDate(dateFrom, DATE_FORMAT.SHORT)}</time>
         <div class="event__type">
           <img class="event__type-icon" width="42" height="42" src="img/icons/${type.toLowerCase()}.png" alt="Event type icon">
         </div>
         <h3 class="event__title">${type} ${destination.name}</h3>
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime="${dateFrom}">${formatDate(dateFrom, DateFormat.TIME)}</time>
+            <time class="event__start-time" datetime="${dateFrom}">${formatDate(dateFrom, DATE_FORMAT.TIME)}</time>
             &mdash;
-            <time class="event__end-time" datetime="${dateTo}">${formatDate(dateTo, DateFormat.TIME)}</time>
+            <time class="event__end-time" datetime="${dateTo}">${formatDate(dateTo, DATE_FORMAT.TIME)}</time>
           </p>
           <p class="event__duration">${duration}</p>
         </div>
@@ -52,7 +47,7 @@ function createPointTemplate(eventPoint, typeOffers, destination) {
         </p>
         <h4 class="visually-hidden">Offers:</h4>
         <ul class="event__selected-offers">
-        ${createOffersListMarkup(offers, typeOffers)}
+        ${createOffersPoint(offers, typeOffers)}
         </ul>
         <button class="event__favorite-btn ${isFavorite ? ' event__favorite-btn--active' : ''}" type="button">
           <span class="visually-hidden">Add to favorite</span>
@@ -95,7 +90,6 @@ export default class PointView extends AbstractView {
   get template() {
     return createPointTemplate(this.#eventPoint, this.#offers, this.#destination);
   }
-
 
   #editClickHandler = (evt) => {
     evt.preventDefault();

@@ -1,48 +1,54 @@
 import ApiService from '../framework/api-service.js';
-import { PointEnd, HOST, TOKEN, MethodHttp } from '../const.js';
+import { PointEnd, HOST, TOKEN, MethodHttp } from '../mock/const.js';
 
 export default class MainApiService extends ApiService {
-  _defaultHeaders = new Headers({'Content-Type': 'application/json'});
+  #defaultHeaders = new Headers({ 'Content-Type': 'application/json' });
 
   constructor() {
     super(HOST, TOKEN);
   }
 
   get points() {
-    return this._load({url: PointEnd.POINTS})
+    return this._load({ url: PointEnd.POINTS })
       .then(ApiService.parseResponse);
   }
 
   get destinations() {
-    return this._load({url: PointEnd.DESTINATIONS})
+    return this._load({ url: PointEnd.DESTINATIONS })
       .then(ApiService.parseResponse);
   }
 
   get offers() {
-    return this._load({url: PointEnd.OFFERS})
+    return this._load({ url: PointEnd.OFFERS })
       .then(ApiService.parseResponse);
   }
 
   async createPoint(point) {
-    const response = await this._load({
-      url: PointEnd.POINTS,
-      method: MethodHttp.POST,
-      body: JSON.stringify(point),
-      headers: this._defaultHeaders,
-    });
-
-    const parsedResponse = await ApiService.parseResponse(response);
-    return parsedResponse;
+    try {
+      const response = await this._load({
+        url: PointEnd.POINTS,
+        method: MethodHttp.POST,
+        body: JSON.stringify(point),
+        headers: this.#defaultHeaders,
+      });
+      const parsedResponse = await ApiService.parseResponse(response);
+      return parsedResponse;
+    } catch (error) {
+      error('Ошибка при создании точки:', error);
+      throw error;
+    }
   }
 
   async updatePoint(point) {
+    if (!point.id) {
+      throw new Error('ID точки не задан');
+    }
     const response = await this._load({
-      url: `${PointEnd.POINTS}/${point.id}`,
+      url: `${PointEnd.POINTS}/${point.id}`, // Добавьте ID точки в URL
       method: MethodHttp.PUT,
       body: JSON.stringify(point),
-      headers: this._defaultHeaders,
+      headers: this.#defaultHeaders,
     });
-
     const parsedResponse = await ApiService.parseResponse(response);
     return parsedResponse;
   }

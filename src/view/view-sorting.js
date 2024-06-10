@@ -1,6 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-function createSortingItemTemplate(column, selectedSortType) {
+function createSortingPointsTemplate(column, selectedSortType) {
   const { type, label, active, defaultSelected } = column;
   const isChecked = selectedSortType === type || defaultSelected;
   return `
@@ -12,7 +12,7 @@ function createSortingItemTemplate(column, selectedSortType) {
 
 function createSortingTemplate(items, selectedSortType) {
   return `<form class="trip-events__trip-sort trip-sort" action="#" method="get">
-    ${items.map((el) => createSortingItemTemplate(el, selectedSortType)).join('')}
+    ${items.map((el) => createSortingPointsTemplate(el, selectedSortType)).join('')}
   </form>`;
 }
 

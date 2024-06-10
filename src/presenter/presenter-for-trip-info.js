@@ -1,9 +1,9 @@
 import { render, RenderPosition, replace} from '../framework/render.js';
-import { SortType } from '../const.js';
-import { sortByType } from './utils.js';
+import { SORTING_BY_TYPE } from '../mock/const.js';
+import { sortByType } from '../mock/utils.js';
+import TripInfoView from '../view/view-trip-info.js';
 
-import TripInfoView from '../view/trip-info-view.js';
-export default class TripInfo {
+export default class TripInfoPresenter {
   #container = null;
   #points = null;
   #destinations = null;
@@ -40,7 +40,7 @@ export default class TripInfo {
   #getTripInfoProps() {
     const points = this.#points.get();
     return {
-      points: points ? sortByType[SortType.DAY](points) : [],
+      points: points ? sortByType[SORTING_BY_TYPE.DAY](points) : [],
       destinations: this.#destinations.get(),
       offers: this.#offers.get(),
       isLoading: !points,

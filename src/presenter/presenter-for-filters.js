@@ -1,7 +1,7 @@
 import { render,replace } from '../framework/render.js';
-import FiltersView from '../view/filters-view.js';
-import { FilterSettings, UpdateType } from '../const.js';
-import { filterByType } from '../utils';
+import FiltersView from '../view/view-filters.js';
+import { SettingsForFilters, UPDATING_BY_TYPE } from '../mock/const.js';
+import { filterByType } from '../mock/utils.js';
 
 export default class FiltersPresenter {
   #container = null;
@@ -15,49 +15,42 @@ export default class FiltersPresenter {
     this.#pointsModel = pointsModel;
     this.#filtersModel = filtersModel;
 
-    this.#pointsModel.addObserver(this.#pointsModelEventHandler);
-    this.#filtersModel.addObserver(this.#filtersModelEventHandler);
+    this.#pointsModel.addObserver(this.#eventPointsHandler);
+    this.#filtersModel.addObserver(this.#eventFiltersHandler);
   }
 
   init() {
-    this.#filters = this.#createFilters();
-    this.#filtersView = this.#createView();
+    this.#filters = this.#filtersCreating();
+    this.#filtersView = this.#viewCreating();
     render(this.#filtersView, this.#container);
   }
 
-  #update() {
+  #filtersUpdate() {
     if (!this.#filtersView) {
       return;
     }
 
-    this.#filters = this.#updateFilters();
-    const newFiltersView = this.#createView();
+    this.#filters = this.#filtersUpdating();
+    const newFiltersView = this.#viewCreating();
 
     replace(newFiltersView, this.#filtersView);
     this.#filtersView = newFiltersView;
   }
 
-  #createFilters() {
+  #filtersCreating() {
     const points = this.#pointsModel.get();
     const currentFilter = this.#filtersModel.get();
 
     return Object.entries(filterByType)
       .map(([type, filter]) => ({
-        ...FilterSettings[type],
+        ...SettingsForFilters[type],
         type,
         selected: currentFilter === type,
         disabled: points ? filter(points).length === 0 : true
       }));
   }
 
-  #createView() {
-    return new FiltersView({
-      items: this.#filters,
-      onFilterChange: this.#filtersChangeHandler,
-    });
-  }
-
-  #updateFilters() {
+  #filtersUpdating() {
     const points = this.#pointsModel.get();
     const currentFilter = this.#filtersModel.get();
     return this.#filters.map((filter) => ({
@@ -67,15 +60,22 @@ export default class FiltersPresenter {
     }));
   }
 
-  #filtersChangeHandler = (filterType) => {
-    this.#filtersModel.set(UpdateType.MAJOR, filterType);
+  #viewCreating() {
+    return new FiltersView({
+      items: this.#filters,
+      onFilterChange: this.#changingFiltersHandler,
+    });
+  }
+
+  #eventFiltersHandler = () => {
+    this.#filtersUpdate();
   };
 
-  #pointsModelEventHandler = () => {
-    this.#update();
+  #changingFiltersHandler = (filterType) => {
+    this.#filtersModel.set(UPDATING_BY_TYPE.MAJOR, filterType);
   };
 
-  #filtersModelEventHandler = () => {
-    this.#update();
+  #eventPointsHandler = () => {
+    this.#filtersUpdate();
   };
 }

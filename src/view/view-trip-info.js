@@ -1,10 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-import {
-  getRouteLabel,
-  getDurationPeriod,
-  getTotalPointsCost,
-} from '../utils.js';
+import { getRouteLabel, getDurationPeriod, getTotalPointsCost } from '../mock/utils.js';
 
 const createTripInfoDummyTemplate = (isLoading) => `
 <section class="trip-main__trip-info  trip-info">

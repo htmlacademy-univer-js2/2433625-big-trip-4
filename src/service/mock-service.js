@@ -1,35 +1,13 @@
-import {
-  generateDestination,
-} from '../mock/destinations.js';
-import {
-  generateOffer
-} from '../mock/offers.js';
-import {
-  generatePoint
-} from '../mock/points.js';
-
-import {
-  CITIES,
-  EVENT_TYPES,
-  MocksMaxCount
-} from '../const.js';
-
-import {
-  getRandomPositiveNumber,
-  getRandomArrayElement,
-} from '../utils.js';
-
+import { generateDestination } from '../mock/destinations.js';
+import { generateOffer } from '../mock/offers.js';
+import { generatePoint } from '../mock/points.js';
+import { CITIES, EVENT_TYPES, MocksMaxCount } from '../const.js';
+import { getRandomPositiveNumber, getRandomArrayElement } from '../utils.js';
 
 export default class MockService {
-  #destinations = [];
-  #offers = [];
-  #points = [];
-
-  constructor() {
-    this.#destinations = this.#generateDestinations();
-    this.#offers = this.#generateOffers();
-    this.#points = this.#generatePoints();
-  }
+  #destinations = this.#generateDestinations();
+  #offers = this.#generateOffers();
+  #points = this.#generatePoints();
 
   get points() {
     return this.#points;
@@ -43,11 +21,11 @@ export default class MockService {
     return this.#offers;
   }
 
-  #generateDestinations(){
+  #generateDestinations() {
     return CITIES.map(generateDestination);
   }
 
-  #generateOffers(){
+  #generateOffers() {
     return EVENT_TYPES.map((type) => ({
       type,
       offers: Array.from({
